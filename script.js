@@ -7,11 +7,16 @@ const theTimer = document.querySelector(".timer");
 var timer = [0,0,0,0];
 
 // Add leading zero to numbers 9 or below (purely for aesthetics):
-
+    function addZero(time) {
+        if ( time <= 9) {
+            time = "0" + time;
+        }
+        return time;
+    }
 
 // Run a standard minute/second/hundredths timer:
 function runTimer() {
-    let currentTimer = timer[0] + ":" + timer[1] + ":" + timer[2];
+    let currentTimer = addZero(timer[0]) + ":" + addZero(timer[1]) + ":" + addZero(timer[2]);
     theTimer.innerHTML = currentTimer;
     timer[3]++;
 
@@ -23,7 +28,17 @@ function runTimer() {
 // Match the text entered with the provided text on the page:
 function spellCheck() {
     let textEntered = testArea.value;
-    console.log(textEntered);
+    let textOriginMatch = originText.substring(0, textEntered.length);
+
+    if ( textEntered == originText) {
+        testWrapper.style.borderColor = "#429890";
+    } else {
+        if (textEntered == textOriginMatch) {
+            testWrapper.style.borderColor = "#65CCF3";
+        } else {
+            testWrapper.style.borderColor = "#E95D0F";
+        }
+    }
 }
 
 // Start the timer:
