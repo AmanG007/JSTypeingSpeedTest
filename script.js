@@ -5,6 +5,7 @@ const resetButton = document.querySelector("#reset");
 const theTimer = document.querySelector(".timer");
 
 var timer = [0,0,0,0];
+var runingTime = false;
 
 // Add leading zero to numbers 9 or below (purely for aesthetics):
     function addZero(time) {
@@ -31,7 +32,8 @@ function spellCheck() {
     let textOriginMatch = originText.substring(0, textEntered.length);
 
     if ( textEntered == originText) {
-        testWrapper.style.borderColor = "#429890";
+        clearInterval(interval);
+        testWrapper.style.borderColor = "green";
     } else {
         if (textEntered == textOriginMatch) {
             testWrapper.style.borderColor = "#65CCF3";
@@ -44,8 +46,9 @@ function spellCheck() {
 // Start the timer:
 function start() {
     let textLengthCount = testArea.value.length;
-    if (textLengthCount === 0) {
-        setInterval(runTimer, 10);
+    if (textLengthCount === 0 && !runingTime) {
+          runingTime = true;
+          interval = setInterval(runTimer, 10);
     }
     console.log(textLengthCount);
     console.log(runTimer);
@@ -53,7 +56,14 @@ function start() {
 
 // Reset everything:
 function reset() {
-    console.log("Reset Button Is Pressed");
+    clearInterval(interval);
+    interval = null;
+    timer = [0,0,0,0];
+    runingTime = false;
+
+    testArea.value = "";
+    theTimer.innerHTML = "00:00:00";
+    testWrapper.style.borderColor = "grey";
 }
 
 
